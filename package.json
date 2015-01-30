@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "has": "nathanfaucett/has",
-    "is_native": "nathanfaucett/is_native",
+    "define_property": "nathanfaucett/define_property",
     "is_null_or_undefined": "nathanfaucett/is_null_or_undefined"
   }
 }

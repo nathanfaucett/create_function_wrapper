@@ -1,22 +1,15 @@
 var has = require("has"),
-    isNative = require("is_native"),
+    defineProperty = require("define_property"),
     isNullOrUndefined = require("is_null_or_undefined");
 
 
-var nativeDefineProperty = Object.defineProperty,
-    wrapperDescriptor = {
-        configurable: false,
-        enumerable: false,
-        writable: false,
-        value: null
-    };
+var wrapperDescriptor = {
+    configurable: false,
+    enumerable: false,
+    writable: false,
+    value: null
+};
 
-
-if (!isNative(nativeDefineProperty)) {
-    nativeDefineProperty = function defineProperty(obj, prop, desc) {
-        obj[prop] = desc.value;
-    };
-}
 
 function mergeArrays(a, b) {
     var aLength = a.length,
@@ -133,7 +126,7 @@ module.exports = function createFunctionWrapper(fn) {
         };
 
         wrapperDescriptor.value = new FunctionWrapper();
-        nativeDefineProperty(wrapper, "__wrapper__", wrapperDescriptor);
+        defineProperty(wrapper, "__wrapper__", wrapperDescriptor);
         wrapperDescriptor.value = null;
     }
 
