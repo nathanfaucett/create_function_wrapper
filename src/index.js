@@ -4,21 +4,33 @@ var has = require("has"),
 
 
 var wrapperDescriptor = {
-    configurable: false,
-    enumerable: false,
-    writable: false,
-    value: null
-};
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: null
+    },
+    FunctionWrapperPrototype;
 
 
-function mergeArrays(a, b) {
-    var aLength = a.length,
-        i = -1,
-        il = b.length - 1;
+module.exports = createFunctionWrapper;
 
-    while (i++ < il) {
-        a[aLength + i] = b[i];
+
+function createFunctionWrapper(fn) {
+    var wrapper;
+
+    if (has(fn, "__wrapper__")) {
+        wrapper = fn;
+    } else {
+        wrapper = function wrapper() {
+            return wrapper.__wrapper__.run(fn, arguments);
+        };
+
+        wrapperDescriptor.value = new FunctionWrapper();
+        defineProperty(wrapper, "__wrapper__", wrapperDescriptor);
+        wrapperDescriptor.value = null;
     }
+
+    return wrapper;
 }
 
 function FunctionWrapper() {
@@ -26,33 +38,34 @@ function FunctionWrapper() {
     this.argsLeft = null;
     this.argsRight = null;
 }
+FunctionWrapperPrototype = FunctionWrapper.prototype;
 
-FunctionWrapper.prototype.setThisArg = function(thisArg) {
+FunctionWrapperPrototype.setThisArg = function(thisArg) {
     this.thisArg = thisArg;
     return this;
 };
 
-FunctionWrapper.prototype.setArgsLeft = function(args) {
+FunctionWrapperPrototype.setArgsLeft = function(args) {
     this.argsLeft = args;
     return this;
 };
 
-FunctionWrapper.prototype.setArgsRight = function(args) {
+FunctionWrapperPrototype.setArgsRight = function(args) {
     this.argsRight = args;
     return this;
 };
 
-FunctionWrapper.prototype.addArgsLeft = function(args) {
+FunctionWrapperPrototype.addArgsLeft = function(args) {
     mergeArrays(this.argsLeft || (this.argsLeft = []), args);
     return this;
 };
 
-FunctionWrapper.prototype.addArgsRight = function(args) {
+FunctionWrapperPrototype.addArgsRight = function(args) {
     mergeArrays(this.argsRight || (this.argsRight = []), args);
     return this;
 };
 
-FunctionWrapper.prototype.getArguments = function(args) {
+FunctionWrapperPrototype.getArguments = function(args) {
     var argsLeft = this.argsLeft,
         argsRight = this.argsRight,
         out = [];
@@ -70,7 +83,7 @@ FunctionWrapper.prototype.getArguments = function(args) {
     return out;
 };
 
-FunctionWrapper.prototype.run = function(fn, argsArray) {
+FunctionWrapperPrototype.run = function(fn, argsArray) {
     var thisArg = this.thisArg,
         args = this.getArguments(argsArray);
 
@@ -115,20 +128,12 @@ function callWithThisArg(fn, args, thisArg) {
     }
 }
 
-module.exports = function createFunctionWrapper(fn) {
-    var wrapper;
+function mergeArrays(a, b) {
+    var aLength = a.length,
+        i = -1,
+        il = b.length - 1;
 
-    if (has(fn, "__wrapper__")) {
-        wrapper = fn;
-    } else {
-        wrapper = function wrapper() {
-            return wrapper.__wrapper__.run(fn, arguments);
-        };
-
-        wrapperDescriptor.value = new FunctionWrapper();
-        defineProperty(wrapper, "__wrapper__", wrapperDescriptor);
-        wrapperDescriptor.value = null;
+    while (i++ < il) {
+        a[aLength + i] = b[i];
     }
-
-    return wrapper;
-};
+}
