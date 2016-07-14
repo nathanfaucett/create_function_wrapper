@@ -1,7 +1,7 @@
 {
-  "name": "create_function_wrapper",
+  "name": "@nathanfaucett/create_function_wrapper",
   "version": "0.0.1",
-  "description": "create_function_wrapper for the browser and node.js",
+  "description": "creates a function wrapper for binding arguments and this values",
   "repository": {
     "type": "git",
     "url": "https://github.com/nathanfaucett/create_function_wrapper.git"
@@ -11,7 +11,7 @@
     "test": "npm run test-node",
     "test-node": "node ./test | ./node_modules/.bin/tap-spec",
     "test-node-raw": "node ./test",
-    "test-browser-local": "zuul --local 8080 --ui tape -- ./test"
+    "test-browser-local": "zuul --local 9999 --ui tape -- ./test"
   },
   "keywords": [
     "create_function_wrapper",
@@ -21,16 +21,16 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "^0.11.3",
-    "grunt-jsbeautifier": "^0.2.10",
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-jsbeautifier": "^0.2.13",
     "tap-spec": "^4.1.0",
     "tape": "^4.2.0",
     "zuul": "^3.6.0"
   },
   "dependencies": {
-    "has": "git://github.com/nathanfaucett/has.git",
-    "define_property": "git://github.com/nathanfaucett/define_property.git",
-    "is_null_or_undefined": "git://github.com/nathanfaucett/is_null_or_undefined.git"
+    "@nathanfaucett/has": "0.0.1",
+    "@nathanfaucett/define_property": "0.0.1",
+    "@nathanfaucett/is_null_or_undefined": "0.0.1"
   }
 }

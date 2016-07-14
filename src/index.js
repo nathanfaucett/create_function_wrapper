@@ -1,6 +1,6 @@
-var has = require("has"),
-    defineProperty = require("define_property"),
-    isNullOrUndefined = require("is_null_or_undefined");
+var has = require("@nathanfaucett/has"),
+    defineProperty = require("@nathanfaucett/define_property"),
+    isNullOrUndefined = require("@nathanfaucett/is_null_or_undefined");
 
 
 var wrapperDescriptor = {
