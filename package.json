@@ -1,6 +1,6 @@
 {
   "name": "@nathanfaucett/create_function_wrapper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "creates a function wrapper for binding arguments and this values",
   "repository": {
     "type": "git",
@@ -29,8 +29,8 @@
     "zuul": "^3.6.0"
   },
   "dependencies": {
-    "@nathanfaucett/has": "0.0.1",
-    "@nathanfaucett/define_property": "0.0.1",
-    "@nathanfaucett/is_null_or_undefined": "0.0.1"
+    "@nathanfaucett/has": "^0.0.2",
+    "@nathanfaucett/define_property": "^0.0.3",
+    "@nathanfaucett/is_null_or_undefined": "^0.0.1"
   }
 }
